@@ -49,7 +49,7 @@ describe('Testa GET /items/:id ', () => {
     const intenRegistered = await supertest(app).get('/items').send();
     const id = intenRegistered.body[0].id
     const result = await supertest(app).get(`/items/${id}`).send();
-    const expected = {id:`${id}`, title:newItem.title, url:newItem.url, description: newItem.description, amount:newItem.amount}
+    const expected = {id:id, title:newItem.title, url:newItem.url, description: newItem.description, amount:newItem.amount}
     expect(result.status).toBe(200)
     expect(result.body).toMatchObject(expected);
 
