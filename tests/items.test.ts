@@ -43,11 +43,13 @@ describe('Testa GET /items ', () => {
 
 describe('Testa GET /items/:id ', () => {
   const newItem = createNewItem()
-  const expected = {id:1, title:newItem.title, url:newItem.url, description: newItem.description, amount:newItem.amount}
+  
   it('Deve retornar status 200 e um objeto igual a o item cadastrado', async () => {
     await supertest(app).post('/items').send(newItem);
-    const result = await supertest(app).get('/items/1').send();
-
+    const intenRegistered = await supertest(app).get('/items').send();
+    const id = intenRegistered.body[0].id
+    const result = await supertest(app).get(`/items/${id}`).send();
+    const expected = {id:`${id}`, title:newItem.title, url:newItem.url, description: newItem.description, amount:newItem.amount}
     expect(result.status).toBe(200)
     expect(result.body).toMatchObject(expected);
 
